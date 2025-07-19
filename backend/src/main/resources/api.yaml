@@ -25,4 +25,4 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "This is custom hello world message!"
+                example: "Hello world!"

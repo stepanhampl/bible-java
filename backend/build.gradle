@@ -49,7 +49,8 @@ openApiGenerate {
 		useTags: 'true',
 		generateApiDocumentation: 'false',
 		generateModelDocumentation: 'false',
-		hideGenerationTimestamp: 'true'
+		hideGenerationTimestamp: 'true',
+		skipSupportingFiles: 'true'
 	]
 	generateApiTests = false
 	generateModelTests = false
@@ -64,12 +65,18 @@ sourceSets.main.java.srcDirs += "$buildDir/generated/src/main/java"
 // Clean up unwanted generated files
 task cleanupGeneratedFiles {
 	doLast {
-		delete fileTree("$buildDir/generated/src/main/java/org/openapitools")
+		delete "$buildDir/generated/src/main/java/org/openapitools/OpenApiGeneratorApplication.java"
+		delete "$buildDir/generated/src/main/java/org/openapitools/RFC3339DateFormat.java"
+		delete fileTree("$buildDir/generated/src/main/java/org/openapitools/configuration")
 		delete fileTree("$buildDir/generated/src/test/java/org/openapitools")
 	}
 }
 
-// Ensure code generation runs before compilation
-compileJava.dependsOn tasks.openApiGenerate
+// Ensure proper task ordering
 cleanupGeneratedFiles.dependsOn tasks.openApiGenerate
 compileJava.dependsOn cleanupGeneratedFiles
+
+// Specify the main class explicitly
+springBoot {
+	mainClass = 'stepanhampl.bible.BibleApplication'
+}
