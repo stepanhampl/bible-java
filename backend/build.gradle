@@ -22,6 +22,9 @@ dependencies {
 implementation 'org.springframework.boot:spring-boot-starter'
 implementation 'org.springframework.boot:spring-boot-starter-web'
 implementation 'org.springframework.boot:spring-boot-starter-validation'
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+implementation 'org.flywaydb:flyway-core'
+implementation 'org.flywaydb:flyway-mysql'
 implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
 implementation 'io.swagger.core.v3:swagger-annotations:2.2.20'
 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
@@ -64,8 +67,19 @@ openApiGenerate {
 // Add generated sources to main sourceSet
 sourceSets.main.java.srcDirs += "$buildDir/generated/src/main/java"
 
+// Clean up unwanted generated files
+task cleanupGeneratedFiles {
+	doLast {
+		delete "$buildDir/generated/src/main/java/org"
+		delete fileTree("$buildDir/generated/src/test/java/org/openapitools")
+	}
+}
+
 // Ensure API generation runs before compilation
 compileJava.dependsOn tasks.openApiGenerate
+tasks.named('openApiGenerate').configure {
+	finalizedBy cleanupGeneratedFiles
+}
 
 // Specify the main class explicitly
 springBoot {
