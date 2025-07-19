@@ -1,4 +1,4 @@
-package stepanhampl.bible;
+package stepanhampl.bible.delegate;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

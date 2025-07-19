@@ -12,7 +12,7 @@ sudo docker compose up mysql frontend --build
 Then you can debug java backend in VSCode using [launch.json](/backend/.vscode/launch.json)
 
 # Credits
-File [CzeCSP.sql](CzeCSP.sql) was downloaded from https://github.com/scrollmapper/bible_databases/tree/master
+File [V1__Create_bible_tables.sql](backend/src/main/resources/db/migration/V1__Create_bible_tables.sql) was downloaded from https://github.com/scrollmapper/bible_databases/tree/master
 
 # Tech stack
 * React

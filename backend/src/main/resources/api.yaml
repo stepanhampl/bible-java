@@ -26,3 +26,44 @@ paths:
               schema:
                 type: string
                 example: "Hello world!"
+  /bible/random:
+    get:
+      tags:
+        - bible
+      summary: Get random Bible verse
+      description: Returns a random Bible verse from the Czech translation
+      operationId: getBibleRandom
+      responses:
+        '200':
+          description: Random Bible verse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibleVerseResponse'
+
+components:
+  schemas:
+    BibleVerseResponse:
+      type: object
+      required:
+        - bookName
+        - chapter
+        - verse
+        - text
+      properties:
+        bookName:
+          type: string
+          description: Name of the Bible book
+          example: "Genesis"
+        chapter:
+          type: integer
+          description: Chapter number
+          example: 1
+        verse:
+          type: integer
+          description: Verse number
+          example: 5
+        text:
+          type: string
+          description: The verse text
+          example: "Bůh nazval světlo dnem a tmu nazval nocí; a byl večer a bylo ráno, jeden den. "
