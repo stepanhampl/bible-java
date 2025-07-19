@@ -7,7 +7,7 @@ sudo docker compose up --build
 ```
 # How to run without backend (for backend development):
 ```shell
-sudo docker compose up postgres frontend --build
+sudo docker compose up mysql frontend --build
 ```
 Then you can debug java backend in VSCode using [launch.json](/backend/.vscode/launch.json)
 
