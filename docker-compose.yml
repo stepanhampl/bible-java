@@ -1,36 +1,35 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:15-alpine
+  mysql:
+    image: mysql:8.0
     environment:
-      POSTGRES_DB: bible_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      MYSQL_DATABASE: bible_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
 
   backend:
     build: ./backend
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bible_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bible_db
+      SPRING_DATASOURCE_USERNAME: mysql
+      SPRING_DATASOURCE_PASSWORD: mysql
 
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
     depends_on:
-      - postgres
+      - mysql
     environment:
       - CHOKIDAR_USEPOLLING=true
 
 volumes:
-  postgres_data:
+  mysql_data:
