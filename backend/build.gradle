@@ -51,7 +51,8 @@ openApiGenerate {
 		generateApiDocumentation: 'false',
 		generateModelDocumentation: 'false',
 		hideGenerationTimestamp: 'true',
-		skipSupportingFiles: 'true'
+		skipSupportingFiles: 'true',
+		skipOverwrite: 'false'
 	]
 	generateApiTests = false
 	generateModelTests = false
@@ -63,19 +64,8 @@ openApiGenerate {
 // Add generated sources to main sourceSet
 sourceSets.main.java.srcDirs += "$buildDir/generated/src/main/java"
 
-// Clean up unwanted generated files
-task cleanupGeneratedFiles {
-	doLast {
-		delete "$buildDir/generated/src/main/java/org/openapitools/OpenApiGeneratorApplication.java"
-		delete "$buildDir/generated/src/main/java/org/openapitools/RFC3339DateFormat.java"
-		delete fileTree("$buildDir/generated/src/main/java/org/openapitools/configuration")
-		delete fileTree("$buildDir/generated/src/test/java/org/openapitools")
-	}
-}
-
-// Ensure proper task ordering
-cleanupGeneratedFiles.dependsOn tasks.openApiGenerate
-compileJava.dependsOn cleanupGeneratedFiles
+// Ensure API generation runs before compilation
+compileJava.dependsOn tasks.openApiGenerate
 
 // Specify the main class explicitly
 springBoot {
