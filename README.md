@@ -5,6 +5,11 @@ You simply get a random verse from the Bible.
 ```shell
 sudo docker compose up --build
 ```
+# How to run without backend (for backend development):
+```shell
+sudo docker compose up postgres frontend --build
+```
+Then you can debug java backend in VSCode using [launch.json](/backend/.vscode/launch.json)
 
 # Credits
 File [CzeCSP.sql](CzeCSP.sql) was downloaded from https://github.com/scrollmapper/bible_databases/tree/master
