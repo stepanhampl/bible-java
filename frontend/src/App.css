@@ -23,3 +23,50 @@
   max-width: 600px;
   line-height: 1.5;
 }
+
+.verse-display {
+  margin: 20px 0;
+  max-width: 600px;
+}
+
+.verse-text {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.verse-reference {
+  font-size: 1em;
+  color: #ccc;
+  margin-bottom: 0;
+}
+
+.generate-btn {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.generate-btn:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.generate-btn:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 1em;
+  margin-top: 10px;
+}

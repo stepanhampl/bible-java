@@ -1,54 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [verse, setVerse] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetch('http://localhost:8080/')
+  const generateVerse = () => {
+    setLoading(true);
+    setError(null);
+    
+    fetch('/bible/random')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.text();
+        return response.json();
       })
       .then(data => {
-        setMessage(data);
+        setVerse(data);
         setLoading(false);
       })
       .catch(error => {
         setError(error.message);
         setLoading(false);
       });
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>Loading...</p>
-        </header>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>Error: {error}</p>
-        </header>
-      </div>
-    );
-  }
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Bible App</h1>
-        <p>{message}</p>
+        <h1>Generátor Náhodných Biblických Veršů</h1>
+        
+        {verse && (
+          <div className="verse-display">
+            <p className="verse-text">
+              <em>{verse.text}</em>
+            </p>
+            <p className="verse-reference">
+              {verse.bookName} {verse.chapter}:{verse.verse}
+            </p>
+          </div>
+        )}
+        
+        <button 
+          className="generate-btn" 
+          onClick={generateVerse} 
+          disabled={loading}
+        >
+          {loading ? 'Generuji...' : 'generovat'}
+        </button>
+        
+        {error && (
+          <p className="error-message">Chyba: {error}</p>
+        )}
       </header>
     </div>
   );
