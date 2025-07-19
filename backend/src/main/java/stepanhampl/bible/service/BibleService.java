@@ -2,7 +2,7 @@ package stepanhampl.bible.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import stepanhampl.bible.domain.Verse;
+import stepanhampl.bible.dto.RandomVerseDto;
 import stepanhampl.bible.repository.VerseRepository;
 
 import java.util.List;
@@ -17,12 +17,16 @@ public class BibleService {
         this.verseRepository = verseRepository;
     }
     
-    public Verse getRandom() {
-        List<Verse> allVerses = verseRepository.findAll();
-        if (!allVerses.isEmpty()) {
-            // Return a random verse from the list
-            int randomIndex = (int) (Math.random() * allVerses.size());
-            return allVerses.get(randomIndex);
+    public RandomVerseDto getRandom() {
+        List<Object[]> result = verseRepository.findRandomVerseData();
+        if (!result.isEmpty()) {
+            Object[] row = result.get(0);
+            return new RandomVerseDto(
+                (String) row[0],  // bookName
+                (Integer) row[1], // chapter
+                (Integer) row[2], // verse
+                (String) row[3]   // text
+            );
         }
         return null;
     }
