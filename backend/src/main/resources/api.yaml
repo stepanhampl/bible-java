@@ -1,0 +1,28 @@
+openapi: 3.0.0
+info:
+  title: Bible API
+  description: API for Bible application
+  version: 1.0.0
+  contact:
+    name: Stepan Hampl
+    
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /:
+    get:
+      tags:
+        - hello
+      summary: Get hello message
+      description: Returns a custom hello world message
+      operationId: hello
+      responses:
+        '200':
+          description: Hello message
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "This is custom hello world message!"
